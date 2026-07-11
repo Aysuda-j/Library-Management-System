@@ -57,6 +57,15 @@ void check_out_book(){}
 
 void check_in_book(){}
 
+void print_book(int index){
+    printf("\n--- Book Info ---\n");
+    printf("ID: %s\n", library[index].id);
+    printf("Title: %s\n", library[index].title);
+    printf("Author: %s\n", library[index].author);
+    printf("Year: %d\n", library[index].year);
+    printf("Borrowed: %s\n", library[index].borrowed ? "Yes" : "No");
+}
+
 
 int main(){
     int choice;
@@ -74,7 +83,7 @@ int main(){
         while (getchar() != '\n');
 
         switch (choice){
-            case 1: add_book(); break;
+            case 1: add_book(); print_book(book_count - 1); break;
             case 2: search_book(); break;
             case 3: view_status(); break;
             case 4: check_out_book(); break;
