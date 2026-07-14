@@ -79,7 +79,30 @@ void search_book(){
     }
 }
 
-void view_status(){}
+void view_status(){
+    printf("Enter Book Title/Author/year ID to Check Status: \n");
+    char terms[100];
+    fgets(terms, sizeof(terms), stdin);
+    terms[strcspn(terms, "\n")] = '\0';
+
+    bool found = false;
+
+    for(int i=0 ; i<book_count ; i++){
+        char year_str[10];
+        sprintf(year_str, "%d", library[i].year);
+
+        if(strstr(library[i].title, terms) ||
+            strstr(library[i].author, terms) ||
+            strstr(year_str, terms) ||
+            strstr(library[i].member_id, terms)){
+                printf("Title: %s\n", library[i].title);
+                printf("Borrowed: %s\n", library[i].borrowed ? "Yes" : "No");
+                found = true;
+            }
+    }
+
+    if(!found){printf("Book Not Found");}
+}
 
 void check_out_book(){}
 
