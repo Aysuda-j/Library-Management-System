@@ -49,14 +49,6 @@ void add_book(){
     book_count ++;
 }
 
-void search_book(){}
-
-void view_status(){}
-
-void check_out_book(){}
-
-void check_in_book(){}
-
 void print_book(int index){
     printf("\n--- Book Info ---\n");
     printf("ID: %s\n", library[index].id);
@@ -65,6 +57,34 @@ void print_book(int index){
     printf("Year: %d\n", library[index].year);
     printf("Borrowed: %s\n", library[index].borrowed ? "Yes" : "No");
 }
+
+void search_book(){
+    
+    printf("Enter search term (title/author/year/member ID): \n");
+    char term [100];
+    
+    fgets(term, sizeof (term), stdin);
+    term[strcspn(term, "\n")] = '\0';
+
+    for (int i=0 ; i<book_count ; i++){
+        char year_str [10];
+        sprintf(year_str, "%d", library[i].year);
+
+        if(strstr(library[i].title, term) ||
+            strstr(library[i].author, term) ||
+            strstr(year_str, term) ||
+            strstr(library[i].member_id, term)){
+            print_book(i);
+        }
+    }
+}
+
+void view_status(){}
+
+void check_out_book(){}
+
+void check_in_book(){}
+
 
 
 int main(){
