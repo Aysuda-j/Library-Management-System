@@ -16,6 +16,7 @@ struct Book{
 
     struct tm check_out;
     struct tm check_in;
+    struct tm due_date;
 
     char member_id [20];
 };
@@ -80,7 +81,7 @@ void search_book(){
 }
 
 void view_status(){
-    printf("Enter Book Title/Author/year ID to Check Status: \n");
+    printf("Enter Book Title/Author/year/ID to Check Status: \n");
     char terms[100];
     fgets(terms, sizeof(terms), stdin);
     terms[strcspn(terms, "\n")] = '\0';
@@ -104,7 +105,40 @@ void view_status(){
     if(!found){printf("Book Not Found");}
 }
 
-void check_out_book(){}
+void check_out_book(){
+    printf("Enter The Book ID: \n");
+    char term [20];
+    fgets(term, sizeof(term), stdin);
+    term[strcspn(term, "\n")] = '\0';
+
+    bool found = false;
+
+    for(int i=0 ; i<book_count ; i++){
+        if(strcmp(library[i].id, term) == 0){
+            printf("Book found: %s\n", library[i].title);
+            found = true;
+
+            printf("Enter Member ID: \n");
+            fgets(library[i].member_id, sizeof(library[i].member_id),stdin);
+            library[i].member_id[strcspn(library[i].member_id, "\n")] = '\0';
+
+            time_t now = time(NULL);
+            library[i].check_out = *localtime(&now);
+
+            time_t due = now + (14*24*60*60);
+            library[i].due_date = *localtime(&due);
+
+            library[i].borrowed = true;
+
+            char due_str [50];
+            strftime(due_str, sizeof(due_str), "%Y-%m-%d", &library[i].due_date);
+            printf("Due Date: %s\n", due_str);
+        } // fake snow
+    }
+    if(!found){
+        printf("Invalid ID !");
+    }
+}
 
 void check_in_book(){}
 
