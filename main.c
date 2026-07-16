@@ -107,7 +107,7 @@ void view_status(){
 }
 
 void check_out_book(){
-    printf("Enter The Book ID: \n");
+    printf("Enter The Book ID: ");
     char term [20];
     fgets(term, sizeof(term), stdin);
     term[strcspn(term, "\n")] = '\0';
@@ -142,7 +142,39 @@ void check_out_book(){
 }
 
 void check_in_book(){
-    
+    printf("Enter The Book ID: ");
+    char term  [20];
+    fgets(term, sizeof(term), stdin);
+    term[strcspn(term, "\n")] = '\0';
+
+    bool found = false;
+
+    for(int i=0 ; i<book_count ; i++){
+        if(strcmp(library[i].id, term) == 0){
+            found = true;
+
+            if(library[i].borrowed == true){
+                library[i].borrowed = false;
+                strcpy(library[i].member_id, "");
+
+                time_t now = time(NULL);
+                library[i].check_in = *localtime(&now);
+
+                time_t due_time = mktime(&library[i].due_date);
+                char due_str[50];
+                strftime(due_str, sizeof(due_str), "%Y-%m-%d", &library[i].due_date);
+                if(now > due_time){
+                    printf("This Book Id Overdue !! (Was Due: %s)\n", due_str);
+                }
+                else{printf("Returned On Time. (Due: %s)\n", due_str);}
+            }
+            else{printf("This Book Not Checked-Out !");}
+        }
+    }
+
+    if(!found){
+        printf("Invalid ID !");
+    }
 }
 
 
