@@ -24,6 +24,7 @@ struct Book{
 struct Book library [MAX_BOOKS];
 int book_count = 0;
 
+
 void add_book(){
     printf("Book Title: \n");
     fgets(library[book_count].title, sizeof(library[book_count].title), stdin);
@@ -140,8 +141,9 @@ void check_out_book(){
     }
 }
 
-void check_in_book(){}
-
+void check_in_book(){
+    
+}
 
 
 int main(){
